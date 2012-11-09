@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["gebreyohannes@gemhalo.org"]
   gem.description   = %q{Simple gem to convert between Ethiopian and Gregorian dates}
   gem.summary       = %q{Ethiopian date to Gregorian and Vice versa convertor}
-  gem.homepage      = "https://github.com/ethiopic_date"
+  gem.homepage      = "https://github.com/gyohannes/ethiopic_date"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
