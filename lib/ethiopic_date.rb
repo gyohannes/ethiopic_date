@@ -1,5 +1,6 @@
 # encoding: utf-8
 require "ethiopic_date/version"
+require "date"
 module EthiopicDate
   # A Ruby implementation of Ethiopic Calendar based on the Mathematical algorithm
   # from http://ethiopic.org/Calendars/
@@ -44,7 +45,7 @@ module EthiopicDate
     #@example fromEthiopicToGregorian(2012,5,21)
     def fromGregorianToEthiopic(year,month,day)
       #TODO : Handle Exceptions when there is a wrong input
-      ethiopic_date = {:year=>-1,:month=>-1,:day => -1 }
+      date = {:year=>-1,:month=>-1,:day => -1 }
       jdn = jdn_from_gregorian(year,month,day)
       if jdn >=JD_EPOCH_OFFSET_AMETE_MIHRET + 365
   			era= JD_EPOCH_OFFSET_AMETE_MIHRET
@@ -53,10 +54,12 @@ module EthiopicDate
   		end
 		  r = (jdn - era).modulo(1461)
 		  n = (r.modulo(365) ) + (365 * (r/1460 ))
-  		ethiopic_date[:year] =4 * ((jdn - era)/1461) + r/365 - r/1460
-	  	ethiopic_date[:month] =(n/30) + 1
-		ethiopic_date[:day] =(n.modulo(30)) + 1
-      return [ethiopic_date[:year],ethiopic_date[:month],ethiopic_date[:day]].join("-").to_s
+  		date[:year] =4 * ((jdn - era)/1461) + r/365 - r/1460
+	  	date[:month] =(n/30) + 1
+		date[:day] =(n.modulo(30)) + 1
+		
+		ethiopic_date=Date.new(date[:year],date[:month],date[:day])
+      	return ethiopic_date_format(ethiopic_date)
     end
 
 
@@ -66,10 +69,9 @@ module EthiopicDate
     #@return a formated Ethiopic date string
     #@example ethiopic_date_format('2004-5-21') will be ጥር  21 ቀን  2004ዓ/ም
     def ethiopic_date_format(in_date)
-        date_string=in_date.split("-")
-	year=date_string[0].to_i
-        month=date_string[1].to_i
-        day=date_string[2].to_i
+		year=in_date.year
+        month=in_date.month
+        day=in_date.day
       month_name =""
       case month
         when 1 then month_name=" መስከረም "
@@ -86,7 +88,7 @@ module EthiopicDate
         when 12 then month_name=" ነሃሴ "
         when 13 then month_name=" ጳጉሜን "
       end
-    	date="#{month_name} #{day} ቀን  #{year}ዓ/ም"
+    	return "#{month_name} #{day} ቀን  #{year}ዓ/ም"
     end
 
     private
