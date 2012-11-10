@@ -26,8 +26,11 @@ module EthiopicDate
     #@return GregorianDate is returned
     #@example fromEthiopicToGregorian(2004,5,21)
     
-    def fromEthiopicToGregorian(year,month,day)
+    def fromEthiopicToGregorian(in_date)
       #TODO : Handle Exceptions when there is a wrong input
+      year=in_date.year
+      month=in_date.month
+      day=in_date.day
       if (year <=0)
 			era=JD_EPOCH_OFFSET_AMETE_ALEM
 		else
@@ -43,8 +46,11 @@ module EthiopicDate
     #@param  year,month, day in that order
     #@return EthiopicDate is returned
     #@example fromEthiopicToGregorian(2012,5,21)
-    def fromGregorianToEthiopic(year,month,day)
+    def fromGregorianToEthiopic(in_date)
       #TODO : Handle Exceptions when there is a wrong input
+      year=in_date.year
+      month=in_date.month
+      day=in_date.day
       date = {:year=>-1,:month=>-1,:day => -1 }
       jdn = jdn_from_gregorian(year,month,day)
       if jdn >=JD_EPOCH_OFFSET_AMETE_MIHRET + 365
@@ -88,7 +94,7 @@ module EthiopicDate
         when 12 then month_name=" ነሃሴ "
         when 13 then month_name=" ጳጉሜን "
       end
-    	return "#{month_name} #{day} ቀን  #{year}ዓ/ም"
+    	return " #{month_name} #{day} ቀን  #{year}ዓ/ም  "
     end
 
     private
