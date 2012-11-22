@@ -9,6 +9,9 @@ module EthiopicDate
   public
   	Nmonths = 12
 	MonthDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	Ethiopic_month_names={:1=>"መስከረም",:2=>"ጥቅምት",:3=>"ህዳር",:4=>"ታህሳስ",5=>"ጥር",
+	:6=>"የካቲት",:7=>"መጋቢት",:8=>"ሚያዝያ",:9=>"ግንቦት",:10=>"ሰኔ",:11=>"ሐምሌ",:12=>"ነሃሴ",:13=>"ጳጉሜን"}
+	
     #Ethiopic: Julian date offset
     JD_EPOCH_OFFSET_AMETE_MIHRET = 1723856  # ዓ/ም
 
@@ -26,11 +29,11 @@ module EthiopicDate
     #@return GregorianDate is returned
     #@example fromEthiopicToGregorian(2004,5,21)
     
-    def fromEthiopicToGregorian(in_date)
+    def fromEthiopicToGregorian(ethiopic_date)
       #TODO : Handle Exceptions when there is a wrong input
-      year=in_date.year
-      month=in_date.month
-      day=in_date.day
+      year=ethiopic_date[:year]
+      month=ethiopic_date[:month]
+      day=ethiopic_date[:day]
       if (year <=0)
 			era=JD_EPOCH_OFFSET_AMETE_ALEM
 		else
@@ -46,12 +49,12 @@ module EthiopicDate
     #@param  year,month, day in that order
     #@return EthiopicDate is returned
     #@example fromEthiopicToGregorian(2012,5,21)
-    def fromGregorianToEthiopic(in_date)
+    def fromGregorianToEthiopic(gregorian_date)
       #TODO : Handle Exceptions when there is a wrong input
-      year=in_date.year
-      month=in_date.month
-      day=in_date.day
-      date = {:year=>-1,:month=>-1,:day => -1 }
+      year=gregorian_date.year
+      month=gregorian_date.month
+      day=gregorian_date.day
+      ethiopic_date = {:year=>-1,:month=>-1,:day => -1 }
       jdn = jdn_from_gregorian(year,month,day)
       if jdn >=JD_EPOCH_OFFSET_AMETE_MIHRET + 365
   			era= JD_EPOCH_OFFSET_AMETE_MIHRET
@@ -60,12 +63,11 @@ module EthiopicDate
   		end
 		  r = (jdn - era).modulo(1461)
 		  n = (r.modulo(365) ) + (365 * (r/1460 ))
-  		date[:year] =4 * ((jdn - era)/1461) + r/365 - r/1460
-	  	date[:month] =(n/30) + 1
-		date[:day] =(n.modulo(30)) + 1
+  		ethiopic_date[:year] =4 * ((jdn - era)/1461) + r/365 - r/1460
+	  	ethiopic_date[:month] =(n/30) + 1
+		ethiopic_date[:day] =(n.modulo(30)) + 1
 		
-		ethiopic_date=Date.new(date[:year],date[:month],date[:day])
-      	return ethiopic_date_format(ethiopic_date)
+		return "#{Ethiopic_month_names[:ethiopic_date[:month]]} #{ethiopic_date[:day]} ቀን  #{ethiopic_date[:year]}ዓ/ም  "
     end
 
 
@@ -74,11 +76,10 @@ module EthiopicDate
     #@api public
     #@return a formated Ethiopic date string
     #@example ethiopic_date_format('2004-5-21') will be ጥር  21 ቀን  2004ዓ/ም
-    def ethiopic_date_format(in_date)
-		year=in_date.year
-        month=in_date.month
-        day=in_date.day
-      month_name =""
+    def ethiopic_date_format(ethiopic_date)
+		year=ethiopic_date[:year]
+        month=ethiopic_date[:month]
+        day=ethiopic_date[:day]
       case month
         when 1 then month_name=" መስከረም "
         when 2 then month_name=" ጥቅምት "
