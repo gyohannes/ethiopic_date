@@ -9,8 +9,6 @@ module EthiopicDate
   public
   	Nmonths = 12
 	MonthDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-	Ethiopic_month_names={:1=>"መስከረም",:2=>"ጥቅምት",:3=>"ህዳር",:4=>"ታህሳስ",5=>"ጥር",
-	:6=>"የካቲት",:7=>"መጋቢት",:8=>"ሚያዝያ",:9=>"ግንቦት",:10=>"ሰኔ",:11=>"ሐምሌ",:12=>"ነሃሴ",:13=>"ጳጉሜን"}
 	
     #Ethiopic: Julian date offset
     JD_EPOCH_OFFSET_AMETE_MIHRET = 1723856  # ዓ/ም
@@ -67,7 +65,7 @@ module EthiopicDate
 	  	ethiopic_date[:month] =(n/30) + 1
 		ethiopic_date[:day] =(n.modulo(30)) + 1
 		
-		return "#{Ethiopic_month_names[:ethiopic_date[:month]]} #{ethiopic_date[:day]} ቀን  #{ethiopic_date[:year]}ዓ/ም  "
+		return ethiopic_date_format(ethiopic_date)
     end
 
 
@@ -81,19 +79,19 @@ module EthiopicDate
         month=ethiopic_date[:month]
         day=ethiopic_date[:day]
       case month
-        when 1 then month_name=" መስከረም "
-        when 2 then month_name=" ጥቅምት "
-        when 3 then month_name=" ህዳር "
-        when 4 then month_name=" ታህሳስ "
-        when 5 then month_name=" ጥር "
-        when 6 then month_name=" የካቲት "
-        when 7 then month_name=" መጋቢት "
-        when 8 then month_name=" ሚያዝያ "
-        when 9 then month_name=" ግንቦት "
-        when 10 then month_name=" ሰኔ "
-        when 11 then month_name=" ሐምሌ "
-        when 12 then month_name=" ነሃሴ "
-        when 13 then month_name=" ጳጉሜን "
+        when 1 then month_name="መስከረም "
+        when 2 then month_name="ጥቅምት "
+        when 3 then month_name="ህዳር "
+        when 4 then month_name="ታህሳስ "
+        when 5 then month_name="ጥር "
+        when 6 then month_name="የካቲት "
+        when 7 then month_name="መጋቢት "
+        when 8 then month_name="ሚያዝያ "
+        when 9 then month_name="ግንቦት "
+        when 10 then month_name="ሰኔ "
+        when 11 then month_name="ሐምሌ "
+        when 12 then month_name="ነሃሴ "
+        when 13 then month_name="ጳጉሜን "
       end
     	return " #{month_name} #{day} ቀን  #{year}ዓ/ም  "
     end
