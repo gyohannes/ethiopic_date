@@ -84,7 +84,7 @@ module EthiopicDate
         month=ethiopic_date[:month]
         day=ethiopic_date[:day]
         dayName = ethiopic_date[:dayName]
-    	return " #{AmharicDays[dayName.to_sym]}, #{day} #{AmharicMonths['month']} #{year}  "
+    	return " #{AmharicDays[dayName.to_sym]}, #{day} #{AmharicMonths[month.to_sym]} #{year}  "
     end
 
     private
