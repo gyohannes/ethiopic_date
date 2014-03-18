@@ -80,11 +80,11 @@ module EthiopicDate
     #@return a formated Ethiopic date string
     #@example ethiopic_date_format('2004-5-21') will be ጥር  21 ቀን  2004ዓ/ም
     def ethiopic_date_format(ethiopic_date)
-		year=ethiopic_date[:year]
+	year=ethiopic_date[:year]
         month=ethiopic_date[:month]
         day=ethiopic_date[:day]
         dayName = ethiopic_date[:dayName]
-    	return " #{AmharicDays[dayName.to_sym]}, #{day} #{AmharicMonths[month.to_sym]} #{year}  "
+    	return " #{AmharicDays[dayName.to_sym]}, #{day} #{AmharicMonths[month.to_s]} #{year}  "
     end
 
     private
