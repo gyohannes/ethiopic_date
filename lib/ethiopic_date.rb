@@ -47,17 +47,10 @@ module EthiopicDate
     #Changes from in_date:GregorianDate to EthiopicDate
     #
     #@api public
-    #@param  year,month, day in that order
+    #@param  year,month,day in that order
     #@return EthiopicDate is returned
     #@example fromEthiopicToGregorian(2012,5,21)
     def fromGregorianToEthiopic(year,month,day)
-      #TODO : Handle Exceptions when there is a wrong input
-      year=year
-      month=month
-      day=day
-      date = Date.new(year,month,day)
-      dayName = date.strftime('%A')
-      ethiopic_date = {:year=>-1,:month=>-1,:day => -1,:dayName=> dayName }
       jdn = jdn_from_gregorian(year,month,day)
       if jdn >=JD_EPOCH_OFFSET_AMETE_MIHRET + 365
   			era= JD_EPOCH_OFFSET_AMETE_MIHRET
@@ -66,11 +59,11 @@ module EthiopicDate
   		end
 		  r = (jdn - era).modulo(1461)
 		  n = (r.modulo(365) ) + (365 * (r/1460 ))
-  		ethiopic_date[:year] =4 * ((jdn - era)/1461) + r/365 - r/1460
-	  	ethiopic_date[:month] =(n/30) + 1
-		ethiopic_date[:day] =(n.modulo(30)) + 1
+  		eyear = 4 * ((jdn - era)/1461) + r/365 - r/1460
+	  	emonth = (n/30) + 1
+		eday = (n.modulo(30)) + 1
 		
-		return ethiopic_date
+		return "#{eyear}/#{emonth}/#{eday}"
     end
 
 
@@ -80,11 +73,12 @@ module EthiopicDate
     #@return a formated Ethiopic date string
     #@example ethiopic_date_format('2004-5-21') will be ጥር  21 ቀን  2004ዓ/ም
     def ethiopic_date_format(ethiopic_date)
-	year=ethiopic_date[:year]
-        month=ethiopic_date[:month]
-        day=ethiopic_date[:day]
-        dayName = ethiopic_date[:dayName]
-    	return " #{AmharicDays[dayName.to_sym]}, #{day} #{AmharicMonths[month.to_s]} #{year}  "
+	d = ethiopic_date.split('/')
+	year = d[0]
+        month = d[1]
+        day = d[2]
+        day = day.to_s.length < 2 ? '0' << day.to_s : day
+    	return "#{AmharicMonths[month.to_s]} #{day}, #{year}"
     end
 
     private
