@@ -63,7 +63,7 @@ module EthiopicDate
 	  	emonth = (n/30) + 1
 		eday = (n.modulo(30)) + 1
 		
-		return "#{eyear}/#{emonth}/#{eday}"
+		return "#{eyear}-#{emonth}-#{eday}"
     end
 
 
@@ -73,7 +73,7 @@ module EthiopicDate
     #@return a formated Ethiopic date string
     #@example ethiopic_date_format('2004-5-21') will be ጥር  21 ቀን  2004ዓ/ም
     def ethiopic_date_format(ethiopic_date)
-	d = ethiopic_date.split('/')
+	d = ethiopic_date.split('-')
 	year = d[0]
         month = d[1]
         day = d[2]
